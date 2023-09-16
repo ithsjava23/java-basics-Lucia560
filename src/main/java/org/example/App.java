@@ -1,13 +1,13 @@
 package org.example;
-import java.util.Arrays;
 import java.util.Scanner;
-import java.io.*;
+
 
 
 public class App {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+
         int[][] elPriser = new int[24][2]; // priser
         String[] tidInterval = new String[24];//tider
         String userInputMenu; // menu val
@@ -29,7 +29,7 @@ public class App {
             elPriser[i][1] = i;
         }
 
-        do {
+        do{
             String menu = """
                     
                     Elpriser
@@ -53,7 +53,7 @@ public class App {
                     }
                     sc.nextLine();
                 }
-                case "2" -> {
+                case "2"-> {
                     for (int k = 0; k < elPriser.length; k++) {
                         // initiera min och max pris
                         if (k == 0) {
@@ -80,9 +80,10 @@ public class App {
                     System.out.print("Hogsta pris: " + tidInterval[maxFoundAt] + ", " + maxPris + " öre/kWh\n");
                     System.out.print("Medelpris: " + String.format("%.02f", medelPris) + " öre/kWh\n");
                     sc.nextLine();
+
                 }
                 case "3" -> System.out.print("test1");
-                case "4" -> System.out.print("test1");
+                case "4" -> System.out.print("test2");
             }
         }while(!userInputMenu.equalsIgnoreCase("e"));
 
