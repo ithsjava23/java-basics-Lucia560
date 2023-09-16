@@ -1,4 +1,6 @@
 package org.example;
+import java.util.Arrays;
+import java.util.Locale;
 import java.util.Scanner;
 
 
@@ -6,6 +8,8 @@ import java.util.Scanner;
 public class App {
 
     public static void main(String[] args) {
+        Locale swedishlocale = new Locale("sv","SE");
+        Locale.setDefault(swedishlocale);
         Scanner sc = new Scanner(System.in);
 
         int[][] elPriser = new int[24][2]; // priser
@@ -49,9 +53,10 @@ public class App {
 
                     for (int k = 0; k < elPriser.length; k++) {
                         System.out.print(tidInterval[k] + " ");
-                        elPriser[k][0] = sc.nextInt();
+                        elPriser[k][0] = Integer.parseInt(sc.nextLine());
+
                     }
-                    sc.nextLine();
+                    //sc.nextLine();
                 }
                 case "2"-> {
                     for (int k = 0; k < elPriser.length; k++) {
@@ -79,10 +84,19 @@ public class App {
                     System.out.print("Lägsta pris: " + tidInterval[minFoundAt] + ", " + minPris + " öre/kWh\n");
                     System.out.print("Hogsta pris: " + tidInterval[maxFoundAt] + ", " + maxPris + " öre/kWh\n");
                     System.out.print("Medelpris: " + String.format("%.02f", medelPris) + " öre/kWh\n");
-                    sc.nextLine();
+                    //sc.nextLine();
+                 }
+                case "3" -> {
+                    Arrays.sort(elPriser, (a, b) -> Integer.compare(a[0], b[0]));
+                    int place;
+                    for (int i = 23; i == 0; i--){
+                        place =  elPriser[i][1];
+                        System.out.print(tidInterval[place] + " " + elPriser[i][0] + " öre\n");
+                    }
+
+
 
                 }
-                case "3" -> System.out.print("test1");
                 case "4" -> System.out.print("test2");
             }
         }while(!userInputMenu.equalsIgnoreCase("e"));
