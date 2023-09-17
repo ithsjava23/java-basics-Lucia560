@@ -8,26 +8,24 @@ import java.util.Scanner;
 public class App {
 
     public static void main(String[] args) {
-        Locale swedishlocale = new Locale("sv","SE");
-        Locale.setDefault(swedishlocale);
+       /* Locale swedishlocale = new Locale("sv","SE");
+        Locale.setDefault(swedishlocale);*/
+        Locale.setDefault(new Locale("sv","SE"));
         Scanner sc = new Scanner(System.in);
 
         int[][] elPriser = new int[24][2]; // priser
         String[] tidInterval = new String[24];//tider
         String userInputMenu; // menu val
-
+        float medel4H = 0;
         int minPris = 0;
         int minFoundAt = 0;
         int maxPris = 0;
         int maxFoundAt = 0;
-        float medelPris = 0;
+        float medelPris ;
+        float min4H = 0;
+        int min4hStartsAt = 0;
 
         // fylla in tidstabel
-        /*for (int i = 0; i < 24; i++) {
-            String tidStr1 = String.format("%02d", i);
-            String tidStr2 = String.format("%02d", (i + 1) % 24);
-            tidInterval [i]= tidStr1 + "-" + tidStr2;
-        }*/
         for (int i = 0; i < 24; i++) {
             String tidStr1 = String.format("%02d", i);
             String tidStr2 = String.format("%02d", (i + 1) % 24);
@@ -70,6 +68,7 @@ public class App {
                     //sc.nextLine();
                 }
                 case "2"-> {
+                    medelPris = 0;
                     for (int k = 0; k < elPriser.length; k++) {
                         // initiera min och max pris
                         if (k == 0) {
@@ -93,7 +92,7 @@ public class App {
 
                     //presentera statistik
                     System.out.print("Lägsta pris: " + tidInterval[minFoundAt] + ", " + minPris + " öre/kWh\n");
-                    System.out.print("Hogsta pris: " + tidInterval[maxFoundAt] + ", " + maxPris + " öre/kWh\n");
+                    System.out.print("Högsta pris: " + tidInterval[maxFoundAt] + ", " + maxPris + " öre/kWh\n");
                     System.out.print("Medelpris: " + String.format("%.02f", medelPris) + " öre/kWh\n");
                     //sc.nextLine();
                  }
@@ -102,18 +101,38 @@ public class App {
                     Arrays.sort(elPriser, (a, b) -> {
                         int order = Integer.compare(a[0], b[0]);
                         if (order == 0) {
-                            // If they are equal, prioritize earlier hours
+                           // om lika , prioritera tidigare priser
                             return Integer.compare(b[1], a[1]);
                         }
                         else return order;
-                    } );
+                    });
                     int place;
-                    for (int i = 23; i >= 0; i--){
+                    for (int i = 23; i >= 0; i--) {
                         place =  elPriser[i][1];
                         System.out.print(tidInterval[place] + " " + elPriser[i][0] + " öre\n");
                     }
                 }
-                case "4" -> System.out.print("test2");
+                case "4" -> {
+                    String str="";
+                    medel4H = 0;
+                    for(int i = 0; i<= 20 ; i++) {
+                        medel4H =(elPriser[i][0] + elPriser[i + 1][0] + elPriser[i + 2][0] + elPriser[i + 3][0])/4;
+                       if(i == 0) {
+                           min4H = medel4H;
+                           min4hStartsAt = i;
+                           str = tidInterval[min4hStartsAt];
+
+                       }else {
+                           if(medel4H < min4H){
+                               min4H = medel4H;
+                               min4hStartsAt = i;
+                               str = tidInterval[min4hStartsAt];
+                           }
+                       }
+                    }
+                    str = str.substring(0,2);
+                    System.out.print("Påbörja laddning klockan " + str +"\n" + "Medelpris 4h: " + min4H + " öre/kWh\n");
+                }
             }
         }while(!userInputMenu.equalsIgnoreCase("e"));
 
