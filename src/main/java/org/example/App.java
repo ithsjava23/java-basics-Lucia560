@@ -23,11 +23,22 @@ public class App {
         float medelPris = 0;
 
         // fylla in tidstabel
-        for (int i = 0; i < 24; i++) {
+        /*for (int i = 0; i < 24; i++) {
             String tidStr1 = String.format("%02d", i);
             String tidStr2 = String.format("%02d", (i + 1) % 24);
             tidInterval [i]= tidStr1 + "-" + tidStr2;
+        }*/
+        for (int i = 0; i < 24; i++) {
+            String tidStr1 = String.format("%02d", i);
+            String tidStr2 = String.format("%02d", (i + 1) % 24);
+
+            if (i == 23) {
+                tidStr2 = "24";
+            }
+
+            tidInterval[i] = tidStr1 + "-" + tidStr2;
         }
+
         // fylla in index nummer för elpriserna
         for (int i = 0; i < 24; i++) {
             elPriser[i][1] = i;
@@ -86,16 +97,21 @@ public class App {
                     System.out.print("Medelpris: " + String.format("%.02f", medelPris) + " öre/kWh\n");
                     //sc.nextLine();
                  }
-                case "3" -> {
-                    Arrays.sort(elPriser, (a, b) -> Integer.compare(a[0], b[0]));
+                case "3" ->
+                {
+                    Arrays.sort(elPriser, (a, b) -> {
+                        int order = Integer.compare(a[0], b[0]);
+                        if (order == 0) {
+                            // If they are equal, prioritize earlier hours
+                            return Integer.compare(b[1], a[1]);
+                        }
+                        else return order;
+                    } );
                     int place;
                     for (int i = 23; i >= 0; i--){
                         place =  elPriser[i][1];
                         System.out.print(tidInterval[place] + " " + elPriser[i][0] + " öre\n");
                     }
-
-
-
                 }
                 case "4" -> System.out.print("test2");
             }
