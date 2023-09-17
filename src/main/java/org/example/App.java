@@ -21,8 +21,8 @@ public class App {
         int minFoundAt = 0;
         int maxPris = 0;
         int maxFoundAt = 0;
-        float medelPris ;
-        float min4H = 0;
+        double medelPris ;
+        double min4H = 0;
         int min4hStartsAt = 0;
 
         // fylla in tidstabel
@@ -116,7 +116,7 @@ public class App {
                     String str="";
                     medel4H = 0;
                     for(int i = 0; i<= 20 ; i++) {
-                        medel4H =(elPriser[i][0] + elPriser[i + 1][0] + elPriser[i + 2][0] + elPriser[i + 3][0])/4;
+                        medel4H =(elPriser[i][0] + elPriser[i + 1][0] + elPriser[i + 2][0] + elPriser[i + 3][0])/4f;
                        if(i == 0) {
                            min4H = medel4H;
                            min4hStartsAt = i;
@@ -131,7 +131,7 @@ public class App {
                        }
                     }
                     str = str.substring(0,2);
-                    System.out.print("Påbörja laddning klockan " + str +"\n" + "Medelpris 4h: " + min4H + " öre/kWh\n");
+                    System.out.print("Påbörja laddning klockan " + str +"\n" + "Medelpris 4h: " + String.format("%.01f", min4H) + " öre/kWh\n");
                 }
             }
         }while(!userInputMenu.equalsIgnoreCase("e"));
