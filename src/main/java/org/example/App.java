@@ -89,7 +89,7 @@ public class App {
                 case "3" -> {
                     Arrays.sort(elPriser, (a, b) -> Integer.compare(a[0], b[0]));
                     int place;
-                    for (int i = 23; i == 0; i--){
+                    for (int i = 23; i >= 0; i--){
                         place =  elPriser[i][1];
                         System.out.print(tidInterval[place] + " " + elPriser[i][0] + " öre\n");
                     }
