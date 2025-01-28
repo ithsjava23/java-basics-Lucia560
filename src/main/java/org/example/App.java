@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 
 public class App {
-
+ //test
     public static void main(String[] args) {
        /* Locale swedishlocale = new Locale("sv","SE");
         Locale.setDefault(swedishlocale);*/
